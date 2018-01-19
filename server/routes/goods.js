@@ -27,7 +27,7 @@ router.get('/', function (req, res, next) {
     let priceLevel = req.param('priceLevel');
     let priceGt = '', priceLte = '';
     let params = {};
-    
+
     if (priceLevel != 'all') {
         switch (priceLevel) {
             case '0': priceGt = 0; priceLte = 100; break;
@@ -48,18 +48,88 @@ router.get('/', function (req, res, next) {
     goodsModel.exec(function (err, doc) {
         if (err) {
             res.json({
-                status: '1',
+                status: '400',
                 msg: err.message
             });
         } else {
             res.json({
-                status: '0',
+                status: '200',
                 msg: '',
                 result: {
                     count: doc.length,
                     list: doc
                 }
             });
+        }
+    })
+});
+
+//加入到购物车
+router.post('/addCart', function (req, res, next) {
+    let userId = '001',
+        productId = req.body.productId;
+    let User = require('../models/user');
+    User.findOne({ userId: userId }, function (err, userDoc) {
+        if (err) {
+            res.json({
+                status: '400',
+                msg: err.message
+            });
+        } else {
+            if (userDoc) {
+                var goodsItem = '';
+                userDoc.cartList.forEach(function (item) {
+                    if (item.productId == productId) {
+                        goodsItem = item;
+                        item.productNum++;
+                    }
+                });
+                if (goodsItem) {
+                    userDoc.save(function (err2, doc2) {
+                        if (err2) {
+                            res.json({
+                                status: '400',
+                                msg: err2.message
+                            });
+                        } else {
+                            res.json({
+                                status: '200',
+                                msg: '',
+                                result: 'success'
+                            });
+                        }
+                    });
+                } else {
+                    Goods.findOne({ productId: productId }, function (err1, doc1) {
+                        if (err1) {
+                            res.json({
+                                status: '400',
+                                msg: err1.message
+                            })
+                        } else {
+                            if (doc1) {
+                                doc1.productNum = 1;
+                                doc1.checked = 1;
+                                userDoc.cartList.push(doc1);
+                                userDoc.save(function (err2, doc2) {
+                                    if (err2) {
+                                        res.json({
+                                            status: '400',
+                                            msg: err2.message
+                                        })
+                                    } else {
+                                        res.json({
+                                            status: '200',
+                                            msg: '',
+                                            result: 'success'
+                                        })
+                                    }
+                                })
+                            }
+                        }
+                    });
+                }
+            }
         }
     })
 });

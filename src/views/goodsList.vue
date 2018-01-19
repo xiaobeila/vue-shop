@@ -10,7 +10,7 @@
           <div class="filter-nav">
             <span class="sortby">Sort by:</span>
             <a href="javascript:void(0)" class="default cur">Default</a>
-            <a href="javascript:void(0)" class="price" @click="sortGoods()">Price <svg class="icon icon-arrow-short"><use xlink:href="#icon-arrow-short"></use></svg></a>
+            <a href="javascript:void(0)" class="price" v-bind:class="{'sort-up':sortFlag}" @click="sortGoods()">Price <svg class="icon icon-arrow-short"><use xlink:href="#icon-arrow-short"></use></svg></a>
             <a href="javascript:void(0)" class="filterby stopPop">Filter by</a>
           </div>
           <div class="accessory-result">
@@ -18,7 +18,7 @@
             <div class="filter stopPop" id="filter">
               <dl class="filter-price">
                 <dt>Price:</dt>
-               <dd><a href="javascript:void(0)" v-bind:class="{'cur':priceChecked=='all'}">All</a></dd>
+               <dd><a href="javascript:void(0)" @click="setPriceFilter('all')" v-bind:class="{'cur':priceChecked=='all'}">All</a></dd>
                 <dd v-for="(item,index) in priceFilter" v-bind:key="item.id">
                   <a href="javascript:void(0)" @click="setPriceFilter(index)" v-bind:class="{'cur':priceChecked==index}">{{item.startPrice}} - {{item.endPrice}}</a>
                 </dd>
@@ -35,7 +35,7 @@
                     </div>
                     <div class="main">
                       <div class="name">{{item.productName}}</div>
-                      <div class="price">{{item.salePrice | currency('$')}}</div>
+                      <div class="price">{{item.salePrice | currency('￥')}}</div>
                       <div class="btn-area">
                         <a href="javascript:;" class="btn btn--m" @click="addCart(item.productId)">加入购物车</a>
                       </div>
@@ -61,7 +61,7 @@
 import NavHeader from "components/NavHeader";
 import NavFooter from "components/NavFooter";
 import NavBread from "components/NavBread";
-import { goodsList } from "api/apiInterface";
+import { goodsList, addCart } from "api/apiInterface";
 
 export default {
   data() {
@@ -115,7 +115,7 @@ export default {
         setTimeout(() => {
           this.loading = false;
         }, 3000);
-        if (res.status == "0") {
+        if (res.status == "200") {
           if (flag) {
             this.goodsList = this.goodsList.concat(res.result.list);
             if (res.result.count < 4) {
@@ -148,6 +148,16 @@ export default {
       this.priceChecked = index;
       this.page = 1;
       this.getGoodsList();
+    },
+    addCart(productId) {
+      addCart({ productId: productId }).then(response => {
+        var res = response.data;
+        if (res.status == 200) {
+          alert("添加成功！");
+        } else {
+          alert("添加失败！");
+        }
+      });
     }
   },
   components: {

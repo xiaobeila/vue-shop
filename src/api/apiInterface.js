@@ -11,3 +11,15 @@ export function goodsList(param) {
         params: param
     })
 }
+
+/**
+ * addCart 加入购物车
+ * @param {*} param 
+ */
+export function addCart(param) {
+    return fetch({
+        url: '/goods/addCart',
+        method: 'post',
+        data: param
+    })
+}
