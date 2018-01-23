@@ -2,7 +2,7 @@
     <div>
       <nav-header></nav-header>
       <nav-bread>
-          <span>Goods</span>
+          <span>商品列表</span>
       </nav-bread>
 
       <div class="accessory-result-page accessory-page">
@@ -29,7 +29,7 @@
               <div class="accessory-list-wrap">
                 <div class="accessory-list col-4">
                   <ul>
-                    <li v-for="item in goodsList" v-bind:key="item.id">
+                    <li v-for="item in goodsList" v-bind:key="item.productId">
                     <div class="pic">
                         <a href="#"><img v-lazy="'static/'+item.productImage" v-bind:alt="item.productName"></a>
                       </div>
@@ -192,9 +192,5 @@ export default {
 };
 </script>
 <style>
-nav {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0 10px;
-}
+
 </style>

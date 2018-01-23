@@ -23,3 +23,24 @@ export function addCart(param) {
         data: param
     })
 }
+
+/**
+ * cartsList 获取购物车列表
+ */
+export function cartsList() {
+    return fetch({
+        url: '/users/cartList',
+        method: 'get'
+    })
+}
+
+/**
+ * cartDel 购物车删除
+ */
+export function cartDel(param) {
+    return fetch({
+        url: '/users/cartDel',
+        method: 'post',
+        data: param
+    })
+}

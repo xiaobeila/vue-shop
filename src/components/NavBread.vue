@@ -3,7 +3,7 @@
         <div class="bread-wrap">
             <nav class="">
                 <a href="/">
-                    Home
+                    首页
                 </a>
                 <slot></slot>
             </nav>
@@ -11,38 +11,40 @@
     </section>
 </template>
 <style>
-  .bread{
-      height: 45px;
-      line-height: 45px;
-      background-color: #f0f0f0;
-  }
-  .bread-wrap{
-      padding: 0 10px;
-      font-size: 14px;
-      color: #a1a1a1;
-  }
-  .bread-wrap a{
-    position: relative;
-      margin-right: 20px;
-  }
-  .bread-wrap a:after{
-      position: absolute;
-      top: 0px;
-      content:'/';
-      height:20px;
-      line-height: 20px;
-  }
-  .bread-wrap span{
-      color:#d1434a;
-  }
+.bread {
+  height: 45px;
+  line-height: 45px;
+  background-color: #f0f0f0;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 10px;
+}
+.bread-wrap {
+  padding: 0 10px;
+  font-size: 14px;
+  color: #a1a1a1;
+}
+.bread-wrap a {
+  position: relative;
+  margin-right: 20px;
+}
+.bread-wrap a:after {
+  position: absolute;
+  top: 0px;
+  content: "/";
+  height: 20px;
+  line-height: 20px;
+}
+.bread-wrap span {
+  color: #d1434a;
+}
 </style>
 <script>
-
-    export default{
-        data(){
-            return{
-                msg:'hello vue'
-            }
-        }
-    }
+export default {
+  data() {
+    return {
+      msg: "hello vue"
+    };
+  }
+};
 </script>
