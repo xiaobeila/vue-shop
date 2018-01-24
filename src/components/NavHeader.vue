@@ -22,21 +22,21 @@
       </svg>
       <div class="navbar">
         <div class="navbar-left-container">
-          <a href="/">
+          <router-link to="/">
             <img class="navbar-brand-logo" src="/static/logo.png">
-          </a>
+          </router-link>
         </div>
         <div class="navbar-right-container" style="display: flex;">
           <div class="navbar-menu-container">
             <span class="navbar-link">慕课网</span>
             <a href="javascript:void(0)" class="navbar-link">Login</a>
             <div class="navbar-cart-container">
-              <span class="navbar-cart-count">12</span>
-              <a class="navbar-link navbar-cart-link" href="/cart">
+              <span class="navbar-cart-count">1</span>
+               <router-link to="/cart" class="navbar-link navbar-cart-link">
                 <svg class="navbar-cart-logo">
                   <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-cart"></use>
                 </svg>
-              </a>
+              </router-link>
             </div>
           </div>
         </div>
@@ -113,5 +113,5 @@ a {
   width: 25px;
   height: 25px;
   transform: scaleX(-1);
-} 
+}
 </style>

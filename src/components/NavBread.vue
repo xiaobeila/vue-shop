@@ -2,10 +2,8 @@
     <section class="bread">
         <div class="bread-wrap">
             <nav class="">
-                <a href="/">
-                    首页
-                </a>
-                <slot></slot>
+              <router-link to="/">首页</router-link>
+              <slot></slot>
             </nav>
         </div>
     </section>

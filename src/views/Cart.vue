@@ -64,7 +64,7 @@
               <li v-for="item in cartList" v-bind:key="item.productId">
                 <div class="cart-tab-1">
                   <div class="cart-item-check">
-                    <a href="javascipt:;" class="checkbox-btn item-check-btn">
+                    <a href="javascipt:;" class="checkbox-btn item-check-btn" v-bind:class="{'check':item.checked=='1'}" @click="editCart('checked',item)">
                       <svg class="icon icon-ok">
                         <use xlink:href="#icon-ok"></use>
                       </svg>
@@ -84,9 +84,9 @@
                   <div class="item-quantity">
                     <div class="select-self select-self-open">
                       <div class="select-self-area">
-                        <a href="JavaScript:void(0);" class="input-sub">-</a>
+                        <a href="JavaScript:void(0);" class="input-sub" @click="editCart('subtract',item)">-</a>
                         <span class="select-ipt">{{item.productNum}}</span>
-                        <a href="JavaScript:void(0);" class="input-add">+</a>
+                        <a href="JavaScript:void(0);" class="input-add" @click="editCart('add',item)">+</a>
                       </div>
                     </div>
                   </div>
@@ -111,8 +111,8 @@
           <div class="cart-foot-inner">
             <div class="cart-foot-l">
               <div class="item-all-check">
-                <a href="javascipt:;" >
-                  <span class="checkbox-btn item-check-btn" >
+                <a href="javascipt:;" @click="toggleCheckAll">
+                  <span class="checkbox-btn item-check-btn" v-bind:class="{'check':checkAllFlag}">
                       <svg class="icon icon-ok"><use xlink:href="#icon-ok"/></svg>
                   </span>
                   <span>Select all</span>
@@ -172,7 +172,7 @@ import NavHeader from "./../components/NavHeader";
 import NavFooter from "./../components/NavFooter";
 import NavBread from "./../components/NavBread";
 import Modal from "./../components/Modal";
-import { cartsList, cartDel } from "api/apiInterface";
+import { cartsList, cartDel, cartEdit, cartCheckAll } from "api/apiInterface";
 
 export default {
   data() {
@@ -190,6 +190,28 @@ export default {
     NavFooter,
     NavBread,
     Modal
+  },
+  // 计算属性
+  computed: {
+    totalPrice() {
+      let money = 0;
+      this.cartList.forEach(item => {
+        if (item.checked == "1") {
+          money += parseFloat(item.salePrice) * parseInt(item.productNum);
+        }
+      });
+      return money;
+    },
+    checkAllFlag() {
+      return this.checkedCount == this.cartList.length;
+    },
+    checkedCount() {
+      let i = 0;
+      this.cartList.forEach(item => {
+        if (item.checked == "1") i++;
+      });
+      return i;
+    }
   },
   methods: {
     init() {
@@ -213,10 +235,47 @@ export default {
         var res = response.data;
         if (res.status == "200") {
           this.modalConfirm = false;
+          this.init();
         }
       });
     },
-    totalPrice() {}
+    editCart(flag, item) {
+      if (flag == "add") {
+        item.productNum++;
+      } else if (flag == "subtract") {
+        if (item.productNum <= 1) {
+          return;
+        }
+        item.productNum--;
+      } else {
+        item.checked = item.checked == "1" ? "0" : "1";
+      }
+      cartEdit({
+        productId: item.productId,
+        productNum: item.productNum,
+        checked: item.checked
+      }).then(response => {
+        var res = response.data;
+        if (res.status == "200") {
+          console.log("update success!");
+        }
+      });
+    },
+    toggleCheckAll() {
+      let flag = !this.checkAllFlag;
+      console.log(flag);
+      this.cartList.forEach(item => {
+        item.checked = flag ? "1" : "0";
+      });
+      cartCheckAll({
+        checkAll: flag
+      }).then(response => {
+        var res = response.data;
+        if (res.status == "200") {
+          console.log("update success!");
+        }
+      });
+    }
   }
 };
 </script>

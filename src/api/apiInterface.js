@@ -44,3 +44,26 @@ export function cartDel(param) {
         data: param
     })
 }
+
+
+/**
+ * cartEdit 购物车编辑
+ */
+export function cartEdit(param) {
+    return fetch({
+        url: '/users/cartEdit',
+        method: 'post',
+        data: param
+    })
+}
+
+/**
+ * cartCheckAll 购物车全选
+ */
+export function cartCheckAll(param) {
+    return fetch({
+        url: '/users/cartCheckAll',
+        method: 'post',
+        data: param
+    })
+}

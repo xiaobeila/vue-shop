@@ -4,6 +4,13 @@
 
 ## Build Setup
 
+## 启动数据服务
+
+```
+# serve with hot reload at localhost:3000
+node server/bin/www
+```
+
 ``` bash
 # install dependencies
 npm install
