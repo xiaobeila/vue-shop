@@ -263,7 +263,6 @@ export default {
     },
     toggleCheckAll() {
       let flag = !this.checkAllFlag;
-      console.log(flag);
       this.cartList.forEach(item => {
         item.checked = flag ? "1" : "0";
       });

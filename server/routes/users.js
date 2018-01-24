@@ -100,7 +100,7 @@ router.post('/cartEdit', function (req, res, next) {
  */
 router.post('/cartCheckAll', function (req, res, next) {
   let userId = '001',
-    checkAll = req.body.checkAll ? "1" : "0";
+    checkAll = req.body.checkAll == 'true' ? "1" : "0";
   User.findOne({ userId: userId }, function (err, user) {
     if (err) {
       res.json({
