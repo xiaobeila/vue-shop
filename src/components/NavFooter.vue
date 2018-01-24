@@ -6,20 +6,20 @@
           <div class="footer__region">
             <span>Region</span>
             <select class="footer__region__select">
-              <option value="en-US">USA</option>
               <option value="zh-CN">China</option>
+              <option value="en-US">USA</option>
             </select>
           </div>
           <div class="footer__secondary__nav">
             <span>Copyright © 2017 IMooc All Rights Reserved.</span>
             <a href="#">
-              About Us
+              关于我们
             </a>
             <a href="#">
-              Terms &amp; Conditions
+              服务条款
             </a>
             <a href="#">
-              Privacy Policy
+             隐私政策
             </a>
           </div>
         </div>

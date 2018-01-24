@@ -34,6 +34,10 @@ export const asyncRouterMap = [
     path: '/cart',
     component: _import('Cart'),
     hidden: true
+  }, {
+    path: '/address',
+    component: _import('Address'),
+    hidden: true
   }
 ]
 

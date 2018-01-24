@@ -8,16 +8,15 @@
       <div class="accessory-result-page accessory-page">
           <div class="container">
             <div class="filter-nav">
-              <span class="sortby">Sort by:</span>
-              <a href="javascript:void(0)" class="default cur">Default</a>
-              <a href="javascript:void(0)" class="price" v-bind:class="{'sort-up':sortFlag}" @click="sortGoods()">Price <svg class="icon icon-arrow-short"><use xlink:href="#icon-arrow-short"></use></svg></a>
-              <a href="javascript:void(0)" class="filterby stopPop">Filter by</a>
+              <span class="sortby">排序:</span>
+              <a href="javascript:void(0)" class="default cur">默认</a>
+              <a href="javascript:void(0)" class="price" v-bind:class="{'sort-up':sortFlag}" @click="sortGoods()">价格 <svg class="icon icon-arrow-short"><use xlink:href="#icon-arrow-short"></use></svg></a>
             </div>
             <div class="accessory-result">
               <!-- filter -->
               <div class="filter stopPop" id="filter">
                 <dl class="filter-price">
-                  <dt>Price:</dt>
+                  <dt>价格:</dt>
                   <dd><a href="javascript:void(0)" @click="setPriceFilter('all')" v-bind:class="{'cur':priceChecked=='all'}">All</a></dd>
                   <dd v-for="(item,index) in priceFilter" v-bind:key="item.id">
                     <a href="javascript:void(0)" @click="setPriceFilter(index)" v-bind:class="{'cur':priceChecked==index}">{{item.startPrice}} - {{item.endPrice}}</a>
