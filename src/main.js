@@ -5,11 +5,15 @@ import App from './App';
 import router from './router';
 import VueLazyload from 'vue-lazyload';
 import { currency } from './common/js/currency';
-import infiniteScroll from  'vue-infinite-scroll';
+import infiniteScroll from 'vue-infinite-scroll';
 
 import './assets/css/base.css';
 import './assets/css/checkout.css';
 import './assets/css/product.css';
+
+// vuex
+import store from './store';
+import vConsole from 'vconsole';
 
 Vue.use(infiniteScroll);
 Vue.filter('currency', currency);
@@ -24,6 +28,7 @@ Vue.use(VueLazyload, {
 new Vue({
   el: '#app',
   router,
+  store,
   template: '<App/>',
   components: { App }
 });

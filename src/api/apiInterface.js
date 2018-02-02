@@ -1,6 +1,28 @@
 import fetch from 'common/js/fetch';
 
 /**
+ * 登陆接口
+ * @param {*userName,userPwd} param 
+ */
+export function login(param) {
+    return fetch({
+        url: '/users/login',
+        method: 'post',
+        data: param
+    })
+}
+
+/**
+ * 登出接口
+ */
+export function logout() {
+    return fetch({
+        url: '/users/logout',
+        method: 'post'
+    })
+}
+
+/**
  * goods 列表
  * @param {*} param 
  */

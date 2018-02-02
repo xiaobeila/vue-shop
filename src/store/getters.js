@@ -1,0 +1,1 @@
+export const nickName = state => state.nickName
