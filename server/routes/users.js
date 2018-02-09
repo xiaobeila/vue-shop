@@ -58,12 +58,29 @@ router.post("/logout", function (req, res, next) {
   })
 });
 
+//是否登录接口
+router.get("/checkLogin", function (req, res, next) {
+  if (req.cookies.userId) {
+    res.json({
+      status: '200',
+      msg: '',
+      result: req.cookies.userName || ''
+    });
+  } else {
+    res.json({
+      status: '400',
+      msg: '未登录',
+      result: ''
+    });
+  }
+});
+
 
 /**
  * 获取购物车列表
  */
 router.get('/cartList', function (req, res, next) {
-  let userId = '001';
+  let userId = req.cookies.userId;
   User.findOne({ userId: userId }, function (err, doc) {
     if (err) {
       res.json({
@@ -87,7 +104,7 @@ router.get('/cartList', function (req, res, next) {
  * cartDel 购物车删除
  */
 router.post('/cartDel', function (req, res, next) {
-  let userId = '001',
+  let userId = req.cookies.userId,
     productId = req.body.productId;
   User.update({
     userId: userId
@@ -118,7 +135,7 @@ router.post('/cartDel', function (req, res, next) {
  * cartEdit 购物车编辑
  */
 router.post('/cartEdit', function (req, res, next) {
-  let userId = '001',
+  let userId = req.cookies.userId,
     productId = req.body.productId,
     productNum = req.body.productNum,
     checked = req.body.checked;
@@ -151,7 +168,7 @@ router.post('/cartEdit', function (req, res, next) {
  * cartCheckAll 购物车全选
  */
 router.post('/cartCheckAll', function (req, res, next) {
-  let userId = '001',
+  let userId = req.cookies.userId,
     checkAll = req.body.checkAll == 'true' ? "1" : "0";
   User.findOne({ userId: userId }, function (err, user) {
     if (err) {
@@ -181,6 +198,33 @@ router.post('/cartCheckAll', function (req, res, next) {
           }
         })
       }
+    }
+  })
+});
+
+/**
+ * 获取购物车总数
+ */
+router.post('/getCartCount', function (req, res, doc) {
+  let userId = req.cookies.userId;
+  User.findOne({ userId: userId }, function (err, doc) {
+    if (err) {
+      res.json({
+        status: '400',
+        msg: err.message,
+        result: ''
+      })
+    } else {
+      let cartList = doc.cartList;
+      let cartCount = 0;
+      cartList.map(function (item) {
+        cartCount += parseFloat(item.productNum);
+      })
+      res.json({
+        status: '200',
+        msg: '',
+        result: cartCount
+      })
     }
   })
 });

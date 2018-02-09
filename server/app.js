@@ -26,6 +26,22 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// 登录阻拦
+app.use(function (req, res, next) {
+  if (req.cookies.userId) {
+    next();
+  } else {
+    if (req.originalUrl == '/users/login' || req.originalUrl == '/users/logout' || req.originalUrl.indexOf('/goods/list') > -1) {
+      next();
+    } else {
+      res.json({
+        status: '1000',
+        message: '当前用户未登录',
+        result: ''
+      })
+    }
+  }
+});
 app.use('/', index);
 app.use('/users', users);
 app.use('/goods', goods);

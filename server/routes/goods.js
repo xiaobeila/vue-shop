@@ -19,7 +19,7 @@ mongoose.connection.on('disconnected', function () {
 })
 
 //查询商品列表数据
-router.get('/', function (req, res, next) {
+router.get('/list', function (req, res, next) {
     let page = parseInt(req.param("page"));
     let pageSize = parseInt(req.param("pageSize"));
     let sort = parseInt(req.param("sort"));
@@ -66,7 +66,7 @@ router.get('/', function (req, res, next) {
 
 //加入到购物车
 router.post('/addCart', function (req, res, next) {
-    let userId = '001',
+    let userId = req.cookies.userId,
         productId = req.body.productId;
     let User = require('../models/user');
     User.findOne({ userId: userId }, function (err, userDoc) {

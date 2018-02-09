@@ -23,12 +23,22 @@ export function logout() {
 }
 
 /**
+ * 是否登录
+ */
+export function checkLogin() {
+    return fetch({
+        url: '/users/checkLogin',
+        method: 'get'
+    })
+}
+
+/**
  * goods 列表
  * @param {*} param 
  */
 export function goodsList(param) {
     return fetch({
-        url: '/goods',
+        url: '/goods/list',
         methods: 'get',
         params: param
     })
@@ -85,6 +95,17 @@ export function cartEdit(param) {
 export function cartCheckAll(param) {
     return fetch({
         url: '/users/cartCheckAll',
+        method: 'post',
+        data: param
+    })
+}
+
+/**
+ * getCartCount 购物车总数
+ */
+export function getCartCount(param) {
+    return fetch({
+        url: '/users/getCartCount',
         method: 'post',
         data: param
     })
